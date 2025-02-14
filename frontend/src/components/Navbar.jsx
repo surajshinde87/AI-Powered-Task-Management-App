@@ -1,49 +1,58 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
-import { FiMenu, FiX } from "react-icons/fi"; // Menu icons
-import { BsFillSunFill, BsMoonFill } from "react-icons/bs"; // Light/Dark mode icons
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
 
   return (
-    <nav className={`p-4 shadow-lg ${darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
+    <nav className="bg-blue-600 text-white px-6 py-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <h1 className="text-2xl font-bold">Task<span className="text-blue-500">AI</span></h1>
+        <Link to="/" className="text-2xl font-bold">
+          Task<span className="text-yellow-400">AI</span>
+        </Link>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-white text-2xl"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-6">
-          {["Home", "Tasks", "About", "Contact"].map((item) => (
-            <li key={item} className="hover:text-blue-500 cursor-pointer">
-              {item}
-            </li>
-          ))}
+        <ul className="hidden md:flex space-x-6 text-lg">
+          <li>
+            <Link to="/" className="hover:text-yellow-300">Home</Link>
+          </li>
+          <li>
+            <Link to="/tasks" className="hover:text-yellow-300">Tasks</Link>
+          </li>
+          <li>
+            <Link to="/features" className="hover:text-yellow-300">Features</Link>
+          </li>
         </ul>
 
-        {/* Icons: Dark Mode & Mobile Menu */}
-        <div className="flex items-center gap-4">
-          {/* Dark Mode Toggle */}
-          <button onClick={() => setDarkMode(!darkMode)}>
-            {darkMode ? <BsFillSunFill className="text-yellow-400 text-2xl" /> : <BsMoonFill className="text-gray-600 text-2xl" />}
-          </button>
-
-          {/* Mobile Menu Button */}
-          <button className="md:hidden text-2xl" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <FiX /> : <FiMenu />}
-          </button>
+        {/* Login/Signup Buttons */}
+        <div className="hidden md:flex space-x-4">
+          <Link to="/login" className="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-gray-200">
+            Login
+          </Link>
+          <Link to="/signup" className="bg-yellow-400 text-blue-600 px-4 py-2 rounded-md hover:bg-yellow-300">
+            Signup
+          </Link>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <ul className="md:hidden flex flex-col gap-4 text-center mt-4">
-          {["Home", "Tasks", "About", "Contact"].map((item) => (
-            <li key={item} className="hover:text-blue-500 cursor-pointer" onClick={() => setMenuOpen(false)}>
-              {item}
-            </li>
-          ))}
-        </ul>
+        <div className="md:hidden flex flex-col space-y-4 mt-4">
+          <Link to="/" className="block text-center py-2 hover:bg-blue-500">Home</Link>
+          <Link to="/tasks" className="block text-center py-2 hover:bg-blue-500">Tasks</Link>
+          <Link to="/features" className="block text-center py-2 hover:bg-blue-500">Features</Link>
+          <Link to="/login" className="block text-center py-2 bg-white text-blue-600 rounded-md">Login</Link>
+          <Link to="/signup" className="block text-center py-2 bg-yellow-400 text-blue-600 rounded-md">Signup</Link>
+        </div>
       )}
     </nav>
   );
